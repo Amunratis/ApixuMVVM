@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.weather.current.CurrentWeatherFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/test">
+
+    </TextView>
+
+<!--
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -168,6 +176,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_precipitation"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="Visibility: 20 km" />
+        tools:text="Visibility: 20 km" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
