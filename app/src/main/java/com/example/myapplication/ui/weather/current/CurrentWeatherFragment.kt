@@ -16,6 +16,9 @@ import com.example.myapplication.data.network.response.WeatherNetworkDataSourceI
 import com.resocoder.forecastmvvm.data.network.ConnectivityInterceptorImpl
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.android.synthetic.main.future_list_weather_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CurrentWeatherFragment : Fragment() {
 
@@ -42,6 +45,11 @@ class CurrentWeatherFragment : Fragment() {
         weatherNetworkDataSource.downloadedCurrentWeather.observe(this, Observer {
          test.text = it.toString()
         })
+
+        GlobalScope.launch(Dispatchers.Main) {
+
+            weatherNetworkDataSource.fetchCurrentWeather("London", "en")
+        }
     }
 
 }
