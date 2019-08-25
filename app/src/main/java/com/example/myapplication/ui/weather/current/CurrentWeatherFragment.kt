@@ -38,7 +38,7 @@ class CurrentWeatherFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
-        // TODO: Use the ViewModel
+
         val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
         val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
 
@@ -46,6 +46,7 @@ class CurrentWeatherFragment : Fragment() {
          test.text = it.toString()
         })
 
+        //TODO change this to something more lifecycle aware
         GlobalScope.launch(Dispatchers.Main) {
 
             weatherNetworkDataSource.fetchCurrentWeather("London", "en")
