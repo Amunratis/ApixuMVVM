@@ -1,6 +1,7 @@
-package com.example.myapplication.data.network.response
+package com.example.myapplication.data.network.entity
 
 
+import com.example.myapplication.data.network.entity.Condition
 import com.google.gson.annotations.SerializedName
 
 data class Current(
