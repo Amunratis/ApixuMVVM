@@ -20,7 +20,7 @@ class ForecastRepositoryImpl (
 
     init {
         weatherNetworkDataSource.downloadedCurrentWeather.observeForever{
-
+            newCurrentWeather -> persistFetchedCurrentWeather(newCurrentWeather)
         }
     }
 
@@ -30,10 +30,9 @@ class ForecastRepositoryImpl (
             return@withContext if (metric) currentWeatherDao.getWeatherMetric()
             else currentWeatherDao.getWeatherImperial()
         }
-
     }
 
-    private fun persistFetchedCurrentWeatcher(fetchedWeather:CurrentWeatherResponse){
+    private fun persistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse) {
         GlobalScope.launch(Dispatchers.IO) {
             currentWeatherDao.upsert(fetchedWeather.currentWeatherEntry)
         }
