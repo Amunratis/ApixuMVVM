@@ -5,6 +5,8 @@ import com.example.myapplication.data.ApixuWeatherApiService
 import com.example.myapplication.data.db.ForecastDatabase
 import com.example.myapplication.data.network.response.WeatherNetworkDataSource
 import com.example.myapplication.data.network.response.WeatherNetworkDataSourceImpl
+import com.example.myapplication.data.provider.UnitProvider
+import com.example.myapplication.data.provider.UnitProviderImpl
 import com.example.myapplication.data.repository.ForecastRepository
 import com.example.myapplication.data.repository.ForecastRepositoryImpl
 import com.example.myapplication.ui.weather.current.CurrentWeatherViewModelFactory
@@ -22,14 +24,14 @@ import org.kodein.di.generic.singleton
 class ForecastApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
         import(androidXModule(this@ForecastApplication))
-
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { ApixuWeatherApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {
