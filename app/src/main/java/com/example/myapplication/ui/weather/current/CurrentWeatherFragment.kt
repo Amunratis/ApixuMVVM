@@ -17,8 +17,8 @@ import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 import com.example.myapplication.internal.GlideApp
 
-class CurrentWeatherFragment : ScopedFragment(), KodeinAware{
 
+class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     override val kodein by closestKodein()
     private val viewModelFactory: CurrentWeatherViewModelFactory by instance()
@@ -43,11 +43,18 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware{
 
     private fun bindUI() = launch {
         val currentWeather = viewModel.weather.await()
+
+        val weatherLocation = viewModel.weatherLocation.await()
+
+        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
+            if (location == null) return@Observer
+            updateLocation(location.name)
+        })
+
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
             if (it == null) return@Observer
 
             group_loading.visibility = View.GONE
-            updateLocation("Los Angeles")
             updateDateToToday()
             updateTemperatures(it.temperature, it.feelsLikeTemperature)
             updateCondition(it.conditionText)
@@ -55,13 +62,11 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware{
             updateWind(it.windDirection, it.windSpeed)
             updateVisibility(it.visibilityDistance)
 
-
             GlideApp.with(this@CurrentWeatherFragment)
                 .load("http:${it.conditionIconUrl}")
                 .into(imageView_condition_icon)
         })
     }
-
 
     private fun chooseLocalizedUnitAbbreviation(metric: String, imperial: String): String {
         return if (viewModel.isMetric) metric else imperial
@@ -99,7 +104,5 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware{
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi.")
         textView_visibility.text = "Visibility: $visibilityDistance $unitAbbreviation"
     }
-
-
 
 }

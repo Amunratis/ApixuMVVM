@@ -6,14 +6,13 @@ import com.example.myapplication.data.network.CurrentWeatherResponse
 import com.example.myapplication.data.provider.UnitProvider
 import com.example.myapplication.data.repository.ForecastRepository
 
-
 class CurrentWeatherViewModelFactory(
     private val forecastRepository: ForecastRepository,
-    unitProvider: UnitProvider
+    private val unitProvider: UnitProvider
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CurrentWeatherViewModel(forecastRepository) as T
+        return CurrentWeatherViewModel(forecastRepository, unitProvider) as T
     }
 }
