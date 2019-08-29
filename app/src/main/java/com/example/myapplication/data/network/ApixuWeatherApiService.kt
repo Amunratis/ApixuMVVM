@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val API_KEY = "89e8bd89085b41b7a4b142029180210"
+const val API_KEY = "4765cf255be946c58ee132541192408"
 
 //http://api.apixu.com/v1/current.json?key=89e8bd89085b41b7a4b142029180210&q=London&lang=en
 
